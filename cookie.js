@@ -32,8 +32,8 @@ function start_game() {
         document.body.appendChild(cookie_addition);
 
 
-        cookie_addition.style.left = current_cursor_loc.x + "px";
-        cookie_addition.style.top = current_cursor_loc.y + "px";
+        cookie_addition.style.left = current_cursor_loc.x - 10 + "px";
+        cookie_addition.style.top = current_cursor_loc.y - 30 +"px";
 
         setTimeout(function() {
             document.body.removeChild(cookie_addition);

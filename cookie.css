@@ -102,23 +102,33 @@ body {
 
 .page_right {
     width: 432px;
-    background: #322a23;
+    background: url(https://cdn.dashnet.org/cookieclicker/img/bgBlue.jpg);
     height: 100vh;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
+.store_header {
+    color: #fff;
+}
+
+
+
 .page_middle {
-    background: #3f372f;
+    background: url(https://cdn.dashnet.org/cookieclicker/img/bgBlue.jpg);
     width: 900px;
+    display: flex;
+    flex-direction: column;
 }
 
 .page_left {
     width: 580px;
-    background: #322a23;
+    background: url(https://cdn.dashnet.org/cookieclicker/img/bgBlue.jpg);
     height: 100vh;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .cookie_section {
@@ -128,6 +138,7 @@ body {
     padding-top: 4rem;
     height: 100%;
     gap: 10rem;
+    z-index: 4;
 }
 
 .main_cookie{
@@ -172,7 +183,7 @@ body {
 .cookie_addition {
     position: absolute;
     color: #fff;
-    z-index: 2;
+    z-index: 9999;
     pointer-events: none;
     font-size: 20px;
     font-weight: 800;
@@ -235,4 +246,25 @@ body {
     animation: rotate_anticlock 42s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
+}
+.vingette {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.darken_background {
+    background: #00000038;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+
+
+.cursor_upgrade_one {
+    width: 80%;
+    height: 50px;
+    background: #fff;
 }
