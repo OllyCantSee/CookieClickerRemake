@@ -2,31 +2,36 @@ function start_game() {
     let total_cookies = 0;
     let current_cookies = 0;
     let cookie_click_increase = 1;
-    let current_purchase_limit = 100;
+    let current_purchase_limit = 15;
     let cookies_psecond = 0;
+    let number_of_cursors = 0;
+    let cursor_cookies_psecond = 0.1;
     let check_cookies_complete = 0;
+    let interval_started = false;
     const cookie = document.getElementById("cookie");
     const current_cookie_count = document.getElementById("current_cookie_count");
     const upgrade_one = document.getElementById("upgrade_one");
     const cursor_upgrade = document.getElementById("add_cursor");
     const current_cookies_psecond = document.getElementById("current_cookies_psecond");
-    cursor_upgrade.innerHTML = "cursor: " + current_purchase_limit + " cookies"
+    cursor_upgrade.innerHTML = "cursor: " + current_purchase_limit + " cookies";
 
     cursor_upgrade.addEventListener("click", function() {
         if(current_cookies >= current_purchase_limit) {
-            if(cookies_psecond < 2) {
-                current_purchase_limit = current_purchase_limit * 2;
-                cookies_psecond += 0.5;       
-            } else if (cookies_psecond < 10 && cookies_psecond > 2) {
-                cookies_psecond += 1;
-            }
-        current_cookies_psecond.innerHTML = "per second: " + cookies_psecond;
-        cursor_upgrade.innerHTML = "cursor: " + current_purchase_limit + " cookies"
-        setInterval(add_cookies_psecond, 1000);
-        
+                current_cookies = current_cookies - current_purchase_limit
+                current_purchase_limit = Math.round(current_purchase_limit + current_purchase_limit * 0.2, 1);
+                number_of_cursors += 1;
+
+                let cookies_psecond_now = get_cookies_psecond()
+                cookies_psecond_now = cookies_psecond_now.toFixed(1);
+
+                current_cookies_psecond.innerHTML = "per second: " + cookies_psecond_now
+                current_cookie_count.innerHTML = Math.round(current_cookies, 1) + " cookies";
+                cursor_upgrade.innerHTML = "cursor: " + current_purchase_limit + " cookies";
         }
-
-
+        if (!interval_started) {
+            setInterval(add_cookies_psecond, 1000)
+            interval_started = true;
+        }
     })
 
     function cookie_exists() {
@@ -49,6 +54,12 @@ function start_game() {
 
         current_cookies = parseInt(temp_current_cookies);
         cookie_click_increase = parseInt(temp_click_increase);
+        if (cookie_click_increase == 2) {
+            cursor_cookies_psecond = 0.2;
+            let cookies_psecond_now = get_cookies_psecond()
+            cookies_psecond_now = cookies_psecond_now.toFixed(1);
+            current_cookies_psecond.innerHTML = "per second: " + cookies_psecond_now;
+        }
         current_cookie_count.innerHTML = Math.round(current_cookies, 1) + " cookies";
     }
 
@@ -72,6 +83,10 @@ function start_game() {
             cookie_click_increase = 2;
             current_cookie_count.innerHTML = Math.round(current_cookies, 1) + " cookies";
             upgrade_one.remove();
+            cursor_cookies_psecond = 0.2;
+            let cookies_psecond_now = get_cookies_psecond()
+            cookies_psecond_now = cookies_psecond_now.toFixed(1);
+            current_cookies_psecond.innerHTML = "per second: " + cookies_psecond_now;
         }
 
     })
@@ -117,9 +132,15 @@ function start_game() {
     });
 
     function add_cookies_psecond() {
-        current_cookies = current_cookies + cookies_psecond;
+        current_cookies = current_cookies + (cursor_cookies_psecond * number_of_cursors);
         current_cookie_count.innerHTML = Math.round(current_cookies, 1) + " cookies";
         create_cookie()
+    }
+
+    function get_cookies_psecond() {
+        cursors_total = cursor_cookies_psecond * number_of_cursors;
+        cookies_psecond = cursors_total;
+        return cookies_psecond;
     }
 
 
@@ -135,7 +156,7 @@ function start_game() {
 
         setTimeout(() => {
             document.body.removeChild(cookie_image);
-        }, 1200);
+        }, 1600);
     }
 }
 
