@@ -8,7 +8,7 @@ function start_game() {
     const upgrade_one = document.getElementById("upgrade_one");
 
     function cookie_exists() {
-        var cookies = document.cookie.split('; ');
+        let cookies = document.cookie.split('; ');
         cookies.forEach(function(c){
         if(c.match(/current_cookies=.+/)) {
         console.log(true);
@@ -80,9 +80,12 @@ function start_game() {
         cookie_addition.className = "cookie_addition fade_up";
         cookie_addition.innerText = "+" + cookie_click_increase;
         document.body.appendChild(cookie_addition);
+        create_cookie();
 
 
-        cookie_addition.style.left = current_cursor_loc.x - 10 + "px";
+        let random_x_adjust = Math.random() * (10);
+
+        cookie_addition.style.left = current_cursor_loc.x - 10 + random_x_adjust + "px";
         cookie_addition.style.top = current_cursor_loc.y - 30 + "px";
 
         setTimeout(function() {
@@ -91,6 +94,22 @@ function start_game() {
 
     });
 
+}
+
+function create_cookie() {
+    let cookie_image = document.createElement("img");
+    cookie_image.src = "Cookie Image.png";
+    cookie_image.className = "fall_down"
+    document.body.appendChild(cookie_image);
+
+    let random_x = Math.random() * (530);
+    console.log(random_x)
+
+    cookie_image.style.left = random_x + "px";
+
+    setTimeout(() => {
+        document.body.removeChild(cookie_image);
+    }, 1200);
 }
 
 start_game()
