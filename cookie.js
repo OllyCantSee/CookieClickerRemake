@@ -2,17 +2,39 @@ function start_game() {
     let total_cookies = 0;
     let current_cookies = 0;
     let cookie_click_increase = 1;
+    let current_purchase_limit = 100;
+    let cookies_psecond = 0;
     let check_cookies_complete = 0;
     const cookie = document.getElementById("cookie");
     const current_cookie_count = document.getElementById("current_cookie_count");
     const upgrade_one = document.getElementById("upgrade_one");
+    const cursor_upgrade = document.getElementById("add_cursor");
+    const current_cookies_psecond = document.getElementById("current_cookies_psecond");
+    cursor_upgrade.innerHTML = "cursor: " + current_purchase_limit + " cookies"
+
+    cursor_upgrade.addEventListener("click", function() {
+        if(current_cookies >= current_purchase_limit) {
+            if(cookies_psecond < 2) {
+                current_purchase_limit = current_purchase_limit * 2;
+                cookies_psecond += 0.5;       
+            } else if (cookies_psecond < 10 && cookies_psecond > 2) {
+                cookies_psecond += 1;
+            }
+        current_cookies_psecond.innerHTML = "per second: " + cookies_psecond;
+        cursor_upgrade.innerHTML = "cursor: " + current_purchase_limit + " cookies"
+        setInterval(add_cookies_psecond, 1000);
+        
+        }
+
+
+    })
 
     function cookie_exists() {
         let cookies = document.cookie.split('; ');
         cookies.forEach(function(c){
         if(c.match(/current_cookies=.+/)) {
-        console.log(true);
-        check_cookies()
+            console.log(true);
+            check_cookies()
         }
         });
     }
@@ -27,7 +49,7 @@ function start_game() {
 
         current_cookies = parseInt(temp_current_cookies);
         cookie_click_increase = parseInt(temp_click_increase);
-        current_cookie_count.innerHTML = current_cookies + " cookies";
+        current_cookie_count.innerHTML = Math.round(current_cookies, 1) + " cookies";
     }
 
     function getCookie(cookieName) {
@@ -48,7 +70,7 @@ function start_game() {
         if(current_cookies > 100) {
             current_cookies = current_cookies - 100;
             cookie_click_increase = 2;
-            current_cookie_count.innerHTML = current_cookies + " cookies";
+            current_cookie_count.innerHTML = Math.round(current_cookies, 1) + " cookies";
             upgrade_one.remove();
         }
 
@@ -65,7 +87,7 @@ function start_game() {
         current_cookies += cookie_click_increase;
         total_cookies += cookie_click_increase
 
-        current_cookie_count.innerHTML = current_cookies + " cookies";
+        current_cookie_count.innerHTML = Math.round(current_cookies, 1) + " cookies";
     }
 
     cookie.addEventListener("click", function(event) {
@@ -94,22 +116,29 @@ function start_game() {
 
     });
 
+    function add_cookies_psecond() {
+        current_cookies = current_cookies + cookies_psecond;
+        current_cookie_count.innerHTML = Math.round(current_cookies, 1) + " cookies";
+        create_cookie()
+    }
+
+
+    function create_cookie() {
+        let cookie_image = document.createElement("img");
+        cookie_image.src = "Cookie Image.png";
+        cookie_image.className = "fall_down"
+        document.body.appendChild(cookie_image);
+
+        let random_x = Math.random() * (530);
+
+        cookie_image.style.left = random_x + "px";
+
+        setTimeout(() => {
+            document.body.removeChild(cookie_image);
+        }, 1200);
+    }
 }
 
-function create_cookie() {
-    let cookie_image = document.createElement("img");
-    cookie_image.src = "Cookie Image.png";
-    cookie_image.className = "fall_down"
-    document.body.appendChild(cookie_image);
 
-    let random_x = Math.random() * (530);
-    console.log(random_x)
-
-    cookie_image.style.left = random_x + "px";
-
-    setTimeout(() => {
-        document.body.removeChild(cookie_image);
-    }, 1200);
-}
 
 start_game()

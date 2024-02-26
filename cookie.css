@@ -67,7 +67,7 @@ body {
     }
     100% {
         opacity: 0;
-        transform: translateY(-150px);
+        transform: translateY(-200px);
     }
 }
 
@@ -123,7 +123,7 @@ body {
     align-items: center;
 }
 
-.store_header {
+.right_header {
     color: #fff;
 }
 
@@ -247,8 +247,9 @@ body {
 }
 
 .fade_up {
-    animation: fade_up 4s;
+    animation: fade_up 2s;
     animation-fill-mode: forwards;
+    animation-timing-function: linear;
 }
 
 .spin_clockwise {
@@ -264,8 +265,9 @@ body {
 .fall_down {
     position: absolute;
     top: -20px;
-    animation: fall_down 1.2s;
-    animation-timing-function:cubic-bezier(1, 0.7, 1, 1.2)
+    animation: fall_down 1.6s;
+    animation-timing-function:cubic-bezier(1, 0.7, 1, 1.2);
+    pointer-events: none;
 }
 .vingette {
     position: absolute;
