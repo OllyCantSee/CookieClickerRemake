@@ -125,19 +125,62 @@ body {
 
 .right_header {
     color: #fff;
+    margin-bottom: 1rem;
 }
 
+.buildings_section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.add_cursor {
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+}
+
+.background_tile {
+    width: 315px;
+    margin-left: 8px;
+    top: 0;
+    z-index: 1;
+}
+
+.cursor_image {
+    z-index: 9999;
+    position: absolute;
+    top: 5px;
+    left: 20px;
+    filter: drop-shadow(2px 2px 3px #000);
+}
+
+.add_cursor_title {
+    position: absolute;
+    left: 0;
+    z-index: 9999;
+    left: 70px;
+}
+
+.add_cursor_price {
+    font-size: 20px;
+    position: absolute;
+    left: 70px;
+    top: 35px;
+    z-index: 9999;
+}
 
 
 .page_middle {
     background: url(https://cdn.dashnet.org/cookieclicker/img/bgBlue.jpg);
-    width: 900px;
+    width: 1350px;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .page_left {
-    width: 580px;
+    width: 780px;
     background: url(https://cdn.dashnet.org/cookieclicker/img/bgBlue.jpg);
     height: 100vh;
     display: flex;
@@ -264,7 +307,7 @@ body {
 }
 .fall_down {
     position: absolute;
-    top: -20px;
+    top: -50px;
     animation: fall_down 1.6s;
     animation-timing-function:cubic-bezier(1, 0.7, 1, 1.2);
     pointer-events: none;
@@ -283,10 +326,32 @@ body {
     z-index: 1;
 }
 
+.side_nav {
+    position: absolute;
+    right: -7px;
+    z-index: 999;
+}
+
+.side_nav2 {
+    position: absolute;
+    right: -7px;
+    z-index: 999;
+    bottom: 0;
+}
 
 
 .cursor_upgrade_one {
-    width: 100px;
-    height: 50px;
-    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    background: #0d1b26;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.cursor_upgrade_one:hover {
+    background: #162b3a;
 }

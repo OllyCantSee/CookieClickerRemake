@@ -12,8 +12,9 @@ function start_game() {
     const current_cookie_count = document.getElementById("current_cookie_count");
     const upgrade_one = document.getElementById("upgrade_one");
     const cursor_upgrade = document.getElementById("add_cursor");
+    const add_cursor_price = document.getElementById("add_cursor_price");
     const current_cookies_psecond = document.getElementById("current_cookies_psecond");
-    cursor_upgrade.innerHTML = "cursor: " + current_purchase_limit + " cookies";
+    add_cursor_price.innerText = current_purchase_limit;
 
     cursor_upgrade.addEventListener("click", function() {
         if(current_cookies >= current_purchase_limit) {
@@ -25,13 +26,14 @@ function start_game() {
                 cookies_psecond_now = cookies_psecond_now.toFixed(1);
 
                 current_cookies_psecond.innerHTML = "per second: " + cookies_psecond_now
-                current_cookie_count.innerHTML = Math.round(current_cookies, 1) + " cookies";
-                cursor_upgrade.innerHTML = "cursor: " + current_purchase_limit + " cookies";
+                update_visual_cookies();
+                add_cursor_price.innerText = current_purchase_limit;
         }
         if (!interval_started) {
             setInterval(add_cookies_psecond, 1000)
             interval_started = true;
         }
+        update_page_title()
     })
 
     function cookie_exists() {
@@ -61,6 +63,7 @@ function start_game() {
             current_cookies_psecond.innerHTML = "per second: " + cookies_psecond_now;
         }
         current_cookie_count.innerHTML = Math.round(current_cookies, 1) + " cookies";
+        update_page_title()
     }
 
     function getCookie(cookieName) {
@@ -87,6 +90,7 @@ function start_game() {
             let cookies_psecond_now = get_cookies_psecond()
             cookies_psecond_now = cookies_psecond_now.toFixed(1);
             current_cookies_psecond.innerHTML = "per second: " + cookies_psecond_now;
+            update_page_title()
         }
 
     })
@@ -118,6 +122,7 @@ function start_game() {
         cookie_addition.innerText = "+" + cookie_click_increase;
         document.body.appendChild(cookie_addition);
         create_cookie();
+        update_page_title()
 
 
         let random_x_adjust = Math.random() * (10);
@@ -132,9 +137,17 @@ function start_game() {
     });
 
     function add_cookies_psecond() {
-        current_cookies = current_cookies + (cursor_cookies_psecond * number_of_cursors);
-        current_cookie_count.innerHTML = Math.round(current_cookies, 1) + " cookies";
-        create_cookie()
+        let previous_integer_part = Math.floor(current_cookies); 
+        let addition_psecond = cursor_cookies_psecond * number_of_cursors;
+        current_cookies += addition_psecond;
+    
+        let current_integer_part = Math.floor(current_cookies);
+    
+        if (current_integer_part > previous_integer_part) {
+            create_cookie();
+            current_cookie_count.innerHTML = Math.round(current_cookies) + " cookies";
+            update_page_title()
+        }
     }
 
     function get_cookies_psecond() {
@@ -158,6 +171,26 @@ function start_game() {
             document.body.removeChild(cookie_image);
         }, 1600);
     }
+
+    function update_visual_cookies() {
+        let current_decimal = current_cookies.toString().split(".")
+        if (current_decimal == 0.9) {
+            current_cookie_count.innerHTML = Math.ceil(current_cookies, 1) + " cookies";
+        } else {
+            current_cookie_count.innerHTML = Math.floor(current_cookies, 1) + " cookies";
+        }
+    }
+
+    function update_page_title() {
+        document.title = Math.round(current_cookies) + " cookies - Cookie Clicker";
+    }
+
+    function game_tick() {
+        
+    }
+
+    update_page_title()
+    setInterval(game_tick(), 1000)
 }
 
 
