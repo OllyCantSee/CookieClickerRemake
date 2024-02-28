@@ -11,6 +11,7 @@ function start_game() {
     const cookie = document.getElementById("cookie");
     const current_cookie_count = document.getElementById("current_cookie_count");
     const upgrade_one = document.getElementById("upgrade_one");
+    const upgrade_two = document.getElementById("upgrade_two");
     const cursor_upgrade = document.getElementById("add_cursor");
     const add_cursor_price = document.getElementById("add_cursor_price");
     const add_cursor_quantity = document.getElementById("add_cursor_quantity");
@@ -20,14 +21,14 @@ function start_game() {
 
     cursor_upgrade.addEventListener("click", function() {
         if(current_cookies >= current_purchase_limit) {
-                current_cookies = current_cookies - current_purchase_limit
+                current_cookies = current_cookies - current_purchase_limit;
                 current_purchase_limit = Math.round(current_purchase_limit + current_purchase_limit * 0.2, 1);
                 number_of_cursors += 1;
 
-                let cookies_psecond_now = get_cookies_psecond()
+                let cookies_psecond_now = get_cookies_psecond();
                 cookies_psecond_now = cookies_psecond_now.toFixed(1);
 
-                current_cookies_psecond.innerHTML = "per second: " + cookies_psecond_now
+                current_cookies_psecond.innerHTML = "per second: " + cookies_psecond_now;
                 update_visual_cookies();
                 add_cursor_price.innerText = current_purchase_limit;
                 add_cursor_quantity.innerHTML = number_of_cursors;
@@ -36,8 +37,8 @@ function start_game() {
             setInterval(add_cookies_psecond, 1000)
             interval_started = true;
         }
-        update_page_title()
-        check_cursor_cookies() 
+        update_page_title();
+        check_cursor_cookies();
     })
 
     function cookie_exists() {
@@ -45,7 +46,7 @@ function start_game() {
         cookies.forEach(function(c){
         if(c.match(/current_cookies=.+/)) {
             console.log(true);
-            check_cookies()
+            check_cookies();
         }
         });
     }
@@ -57,18 +58,27 @@ function start_game() {
         if (temp_click_increase > 1) {
             upgrade_one.remove();
         }
+        if (temp_click_increase > 3) {
+            upgrade_two.remove();
+        }
 
         current_cookies = parseInt(temp_current_cookies);
         cookie_click_increase = parseInt(temp_click_increase);
         if (cookie_click_increase == 2) {
             cursor_cookies_psecond = 0.2;
-            let cookies_psecond_now = get_cookies_psecond()
+            let cookies_psecond_now = get_cookies_psecond();
+            cookies_psecond_now = cookies_psecond_now.toFixed(1);
+            current_cookies_psecond.innerHTML = "per second: " + cookies_psecond_now;
+        }
+        if (cookie_click_increase == 4) {
+            cursor_cookies_psecond = 0.4;
+            let cookies_psecond_now = get_cookies_psecond();
             cookies_psecond_now = cookies_psecond_now.toFixed(1);
             current_cookies_psecond.innerHTML = "per second: " + cookies_psecond_now;
         }
         current_cookie_count.innerHTML = Math.round(current_cookies, 1) + " cookies";
-        update_page_title()
-        check_cursor_cookies() 
+        update_page_title();
+        check_cursor_cookies();
     }
 
     function getCookie(cookieName) {
@@ -86,12 +96,12 @@ function start_game() {
 
 
     upgrade_one.onclick = function() {
-        if(current_cookies > 100) {
+        if(current_cookies >= 100) {
             current_cookies = current_cookies - 100;
-            cookie_click_increase = 2;
+            cookie_click_increase = cookie_click_increase * 2;
             current_cookie_count.innerHTML = Math.round(current_cookies, 1) + " cookies";
             upgrade_one.remove();
-            cursor_cookies_psecond = 0.2;
+            cursor_cookies_psecond = cursor_cookies_psecond * 2;
             let cookies_psecond_now = get_cookies_psecond()
             cookies_psecond_now = cookies_psecond_now.toFixed(1);
             current_cookies_psecond.innerHTML = "per second: " + cookies_psecond_now;
@@ -103,12 +113,12 @@ function start_game() {
     }
 
     upgrade_two.onclick = function() {
-        if(current_cookies > 100) {
-            current_cookies = current_cookies - 100;
-            cookie_click_increase = 2;
+        if(current_cookies >= 500) {
+            current_cookies = current_cookies - 500;
+            cookie_click_increase = cookie_click_increase * 2;
             current_cookie_count.innerHTML = Math.round(current_cookies, 1) + " cookies";
-            upgrade_one.remove();
-            cursor_cookies_psecond = 0.2;
+            upgrade_two.remove();
+            cursor_cookies_psecond = cursor_cookies_psecond * 2;
             let cookies_psecond_now = get_cookies_psecond()
             cookies_psecond_now = cookies_psecond_now.toFixed(1);
             current_cookies_psecond.innerHTML = "per second: " + cookies_psecond_now;
