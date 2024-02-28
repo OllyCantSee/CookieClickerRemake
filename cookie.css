@@ -121,55 +121,90 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: hidden;
 }
 
 .right_header {
     color: #fff;
     margin-bottom: 1rem;
+    margin-left: 0.5rem;
 }
 
 .buildings_section {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    height: 100%;
+    margin-top: -5px;
+}
+
+.upgrade_frame {
+    position: absolute;
+}
+
+.grey_overlay {
+    position: absolute;
+    background: #00000075;
+    z-index: 999;
 }
 
 .add_cursor {
     position: relative;
     width: 100%;
     cursor: pointer;
+    background-image: url('Buildings_tile.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 64px;
+    max-height: 100px;
 }
-
-.background_tile {
-    width: 315px;
-    margin-left: 8px;
-    top: 0;
-    z-index: 1;
-}
-
 .cursor_image {
     z-index: 9999;
     position: absolute;
-    top: 5px;
-    left: 20px;
-    filter: drop-shadow(2px 2px 3px #000);
+    top: 4px;
+    left: 18px;
+    filter: drop-shadow(1px 3px 3px #000);
+}
+
+.add_cursor_quantity {
+    position: absolute;
+    z-index: 9999;
+    top: 12px;
+    right: 20px;
+    color: #4f4d42;
 }
 
 .add_cursor_title {
     position: absolute;
-    left: 0;
     z-index: 9999;
+    top: -2px;
     left: 70px;
+    color: #fff;
+    filter: drop-shadow(-1px 2px 2px #000);
 }
 
 .add_cursor_price {
     font-size: 20px;
     position: absolute;
     left: 70px;
-    top: 35px;
+    top: 32px;
     z-index: 9999;
+    color: #fff;
+    filter: drop-shadow(-1px 2px 2px #000);
 }
 
+.gray_overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: #00000061;
+}
+
+.upgrade_frame {
+
+}
 
 .page_middle {
     background: url(https://cdn.dashnet.org/cookieclicker/img/bgBlue.jpg);
@@ -219,6 +254,20 @@ body {
     opacity: 0.4;
 }
 
+.store_section {
+    width: 100%;
+}
+
+.upgrades_flex {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: start;
+    gap: 5px;
+    margin-bottom: 3px;
+    margin-top: -3px;
+    margin-left: 3px;
+}
 
 .main_cookie:hover {
     scale: 1.02;
@@ -327,20 +376,20 @@ body {
 }
 
 .side_nav {
+    right: 0;
     position: absolute;
-    right: -7px;
     z-index: 999;
 }
 
 .side_nav2 {
     position: absolute;
-    right: -7px;
+    right: 0;
     z-index: 999;
     bottom: 0;
 }
 
 
-.cursor_upgrade_one {
+.cookie_upgrade {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -350,8 +399,21 @@ body {
     outline: none;
     border: none;
     cursor: pointer;
+    position: relative;
+}
+
+.upgrades_section {
+    position: relative;
 }
 
 .cursor_upgrade_one:hover {
     background: #162b3a;
+}
+
+.top_store_panel {
+    z-index: 999;
+    filter: drop-shadow(2px 2px 3px #000);
+}
+.bottom_store_panel {
+    z-index: 999;
 }

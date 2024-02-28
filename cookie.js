@@ -13,8 +13,10 @@ function start_game() {
     const upgrade_one = document.getElementById("upgrade_one");
     const cursor_upgrade = document.getElementById("add_cursor");
     const add_cursor_price = document.getElementById("add_cursor_price");
+    const add_cursor_quantity = document.getElementById("add_cursor_quantity");
     const current_cookies_psecond = document.getElementById("current_cookies_psecond");
     add_cursor_price.innerText = current_purchase_limit;
+    add_cursor_quantity.innerHTML = number_of_cursors;
 
     cursor_upgrade.addEventListener("click", function() {
         if(current_cookies >= current_purchase_limit) {
@@ -28,12 +30,14 @@ function start_game() {
                 current_cookies_psecond.innerHTML = "per second: " + cookies_psecond_now
                 update_visual_cookies();
                 add_cursor_price.innerText = current_purchase_limit;
+                add_cursor_quantity.innerHTML = number_of_cursors;
         }
         if (!interval_started) {
             setInterval(add_cookies_psecond, 1000)
             interval_started = true;
         }
         update_page_title()
+        check_cursor_cookies() 
     })
 
     function cookie_exists() {
@@ -64,6 +68,7 @@ function start_game() {
         }
         current_cookie_count.innerHTML = Math.round(current_cookies, 1) + " cookies";
         update_page_title()
+        check_cursor_cookies() 
     }
 
     function getCookie(cookieName) {
@@ -80,7 +85,7 @@ function start_game() {
     }
 
 
-    upgrade_one.addEventListener("click", function() {
+    upgrade_one.onclick = function() {
         if(current_cookies > 100) {
             current_cookies = current_cookies - 100;
             cookie_click_increase = 2;
@@ -93,7 +98,26 @@ function start_game() {
             update_page_title()
         }
 
-    })
+        check_cursor_cookies() 
+
+    }
+
+    upgrade_two.onclick = function() {
+        if(current_cookies > 100) {
+            current_cookies = current_cookies - 100;
+            cookie_click_increase = 2;
+            current_cookie_count.innerHTML = Math.round(current_cookies, 1) + " cookies";
+            upgrade_one.remove();
+            cursor_cookies_psecond = 0.2;
+            let cookies_psecond_now = get_cookies_psecond()
+            cookies_psecond_now = cookies_psecond_now.toFixed(1);
+            current_cookies_psecond.innerHTML = "per second: " + cookies_psecond_now;
+            update_page_title()
+        }
+
+        check_cursor_cookies() 
+
+    }
 
     function return_cursor_loc(event) {
         mouseX = event.clientX;
@@ -107,6 +131,7 @@ function start_game() {
         total_cookies += cookie_click_increase
 
         current_cookie_count.innerHTML = Math.round(current_cookies, 1) + " cookies";
+        check_cursor_cookies() 
     }
 
     cookie.addEventListener("click", function(event) {
@@ -123,6 +148,7 @@ function start_game() {
         document.body.appendChild(cookie_addition);
         create_cookie();
         update_page_title()
+        check_cursor_cookies()
 
 
         let random_x_adjust = Math.random() * (10);
@@ -156,6 +182,7 @@ function start_game() {
         return cookies_psecond;
     }
 
+    check_cursor_cookies() 
 
     function create_cookie() {
         let cookie_image = document.createElement("img");
@@ -185,12 +212,35 @@ function start_game() {
         document.title = Math.round(current_cookies) + " cookies - Cookie Clicker";
     }
 
-    function game_tick() {
+    function check_cursor_cookies() {
+        //UPGRADE 1
+        if (document.getElementById("upgrade_frame_1") !== null) {
+            if (current_cookies >= 100) {
+                const upgrade_frame_1 = document.getElementById("upgrade_frame_1");
+                upgrade_frame_1.src = "UpgradeFrame.png";
+            } else {
+                upgrade_frame_1.src = "UpgradeFrameDark.png";
+            }
+        }
         
+
+        // UPGRADE 2
+        if (document.getElementById("upgrade_frame_2") !== null) {
+            if (current_cookies >= 500) {
+                const upgrade_frame_2 = document.getElementById("upgrade_frame_2");
+                upgrade_frame_2.src = "UpgradeFrame.png";
+            } else {
+                upgrade_frame_2.src = "UpgradeFrameDark.png";
+            }
+        }
     }
 
+
+
     update_page_title()
-    setInterval(game_tick(), 1000)
+    check_cursor_cookies() 
+
+
 }
 
 
