@@ -12,10 +12,13 @@ function start_game() {
     const current_cookie_count = document.getElementById("current_cookie_count");
     const upgrade_one = document.getElementById("upgrade_one");
     const upgrade_two = document.getElementById("upgrade_two");
+    const upgrade_three = document.getElementById("upgrade_three");
     const cursor_upgrade = document.getElementById("add_cursor");
     const add_cursor_price = document.getElementById("add_cursor_price");
     const add_cursor_quantity = document.getElementById("add_cursor_quantity");
     const current_cookies_psecond = document.getElementById("current_cookies_psecond");
+    const mainCookieSection = document.getElementById('cookie_cursors_section');
+    const cursor = document.querySelector('.cookie_cursor');
     add_cursor_price.innerText = current_purchase_limit;
     add_cursor_quantity.innerHTML = number_of_cursors;
 
@@ -32,6 +35,11 @@ function start_game() {
                 update_visual_cookies();
                 add_cursor_price.innerText = current_purchase_limit;
                 add_cursor_quantity.innerHTML = number_of_cursors;
+
+                let add_cookie_cursor = document.createElement("img");
+                add_cookie_cursor.src = "RotatedCookieCursor.png";
+                add_cookie_cursor.className = "cookie_cursor";
+                mainCookieSection.appendChild(add_cookie_cursor);
         }
         if (!interval_started) {
             setInterval(add_cookies_psecond, 1000)
@@ -72,6 +80,12 @@ function start_game() {
         }
         if (cookie_click_increase == 4) {
             cursor_cookies_psecond = 0.4;
+            let cookies_psecond_now = get_cookies_psecond();
+            cookies_psecond_now = cookies_psecond_now.toFixed(1);
+            current_cookies_psecond.innerHTML = "per second: " + cookies_psecond_now;
+        }
+        if (cookie_click_increase == 6) {
+            cursor_cookies_psecond = 0.8;
             let cookies_psecond_now = get_cookies_psecond();
             cookies_psecond_now = cookies_psecond_now.toFixed(1);
             current_cookies_psecond.innerHTML = "per second: " + cookies_psecond_now;
@@ -118,6 +132,23 @@ function start_game() {
             cookie_click_increase = cookie_click_increase * 2;
             current_cookie_count.innerHTML = Math.round(current_cookies, 1) + " cookies";
             upgrade_two.remove();
+            cursor_cookies_psecond = cursor_cookies_psecond * 2;
+            let cookies_psecond_now = get_cookies_psecond()
+            cookies_psecond_now = cookies_psecond_now.toFixed(1);
+            current_cookies_psecond.innerHTML = "per second: " + cookies_psecond_now;
+            update_page_title()
+        }
+
+        check_cursor_cookies() 
+
+    }
+
+    upgrade_three.onclick = function() {
+        if(current_cookies >= 10000) {
+            current_cookies = current_cookies - 10000;
+            cookie_click_increase = cookie_click_increase * 2;
+            current_cookie_count.innerHTML = Math.round(current_cookies, 1) + " cookies";
+            upgrade_three.remove();
             cursor_cookies_psecond = cursor_cookies_psecond * 2;
             let cookies_psecond_now = get_cookies_psecond()
             cookies_psecond_now = cookies_psecond_now.toFixed(1);
@@ -197,7 +228,7 @@ function start_game() {
     function create_cookie() {
         let cookie_image = document.createElement("img");
         cookie_image.src = "Cookie Image.png";
-        cookie_image.className = "fall_down"
+        cookie_image.className = "fall_down";
         document.body.appendChild(cookie_image);
 
         let random_x = Math.random() * (530);
@@ -233,7 +264,6 @@ function start_game() {
             }
         }
         
-
         // UPGRADE 2
         if (document.getElementById("upgrade_frame_2") !== null) {
             if (current_cookies >= 500) {
@@ -243,13 +273,42 @@ function start_game() {
                 upgrade_frame_2.src = "UpgradeFrameDark.png";
             }
         }
+
+        // UPGRADE 3
+        if (document.getElementById("upgrade_frame_3") !== null) {
+            if (current_cookies >= 500) {
+                const upgrade_frame_3 = document.getElementById("upgrade_frame_2");
+                upgrade_frame_3.src = "UpgradeFrame.png";
+            } else {
+                upgrade_frame_3.src = "UpgradeFrameDark.png";
+            }
+        }
     }
 
+    window.onload = function () {
+        const numCursors = 100;
+        const radius = 200; // Adjust as needed
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
 
+        for (let i = 0; i < numCursors; i++) {
+            const angle = (i / numCursors) * 2 * Math.PI;
+            const x = centerX + radius * Math.cos(angle);
+            const y = centerY + radius * Math.sin(angle);
+            createCursor(x, y);
+        }
+    };
+
+    function createCursor(x, y) {
+        const cursor = document.createElement('div');
+        cursor.className = 'cookie_cursors';
+        cursor.style.left = x + 'px';
+        cursor.style.top = y + 'px';
+        document.body.appendChild(cursor);
+    }
 
     update_page_title()
     check_cursor_cookies() 
-
 
 }
 

@@ -107,6 +107,15 @@ body {
     }
 }
 
+@keyframes orbit {
+    0% {
+        transform: rotate(-100deg) translateX(140px);
+    }
+    100% {
+        transform: rotate(360deg) translateX(140px);
+    }
+}
+
 
 .page {
     width: 100%;
@@ -147,6 +156,22 @@ body {
     position: absolute;
     background: #00000075;
     z-index: 999;
+}
+
+.cookie_cursors_section {
+    position: absolute;
+    top: 110px;
+    left: 110px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.cookie_cursor {
+    position: absolute;
+    z-index: 99999999;
+    animation: orbit 60s linear infinite;
+    width: 35px;
 }
 
 .add_cursor {
